@@ -1,5 +1,9 @@
 package Chapter2
 
+import java.io.BufferedReader
+import java.io.StringReader
+import java.util.TreeMap
+
 class Chapter2 {
 }
 
@@ -49,8 +53,24 @@ fun main() {
 
     for(i in 100 downTo 1 step 2) {
         print(fizzBuzz(i))
-        if(i == 1) println("")
+        if(i == 2) println("")
     }
+
+    mapIteration()
+
+    println(isLetter('q'))
+    println(isLetter('&'))
+    println(isNotDigit('x'))
+    println(isNotDigit('9'))
+
+    println(recognize('8'))
+    println(recognize('c'))
+    println(recognize('*'))
+    println(recognize('H'))
+    println(recognize('0'))
+
+    val reader = BufferedReader(StringReader("It's not a number"))
+    readNumber(reader)
 }
 
 fun eval(e: Expr) : Int =
@@ -82,3 +102,42 @@ fun fizzBuzz(i: Int) =
         i % 5 == 0 -> "Buzz "
         else -> "$i "
     }
+
+fun mapIteration() {
+    val binaryReps = TreeMap<Char, String>()
+
+    for(c in 'A'..'F') {
+        val binary = Integer.toBinaryString(c.code)
+        binaryReps[c] = binary
+    }
+
+    for((letter, binary) in binaryReps) {
+        println("$letter = $binary")
+    }
+
+    val list = arrayListOf("10", "11", "1001")
+
+    for((index, element) in list.withIndex()) {
+        println("$index: $element")
+    }
+}
+
+fun isLetter(c: Char) = c in 'a'..'z' || c in 'A'..'Z'
+fun isNotDigit(c: Char) = c !in '0'..'9'
+
+fun recognize(c: Char) =
+    when(c) {
+        in '0'..'9' -> "It's a digit!"
+        in 'a'..'z', in 'A'..'Z' -> "'It's a letter!"
+        else -> "I dont't know.."
+    }
+
+fun readNumber(reader: BufferedReader) {
+    val number = try {
+        Integer.parseInt(reader.readLine())
+    }
+    catch(e: NumberFormatException) {
+        null
+    }
+    println(number)
+}
