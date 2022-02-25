@@ -26,6 +26,11 @@ fun main() {
     println(joinToString(list, "; "))
     println(joinToString(list, postfix = "}", prefix = "{"))
 
+    println(list.joinToString2(separator = "; ", prefix = "(", postfix = ")"))
+    println(list.joinToString2(" "))
+
+    println(listOf("one", "two", "eight").join())
+
     println("Kotlin".lastChar())
 }
 
@@ -44,5 +49,25 @@ fun <T> joinToString(
     result.append(postfix)
     return result.toString()
 }
+
+fun <T> Collection<T>.joinToString2(
+    separator: String = ", ",
+    prefix: String ="",
+    postfix: String = ""
+) : String {
+    val result = StringBuilder(prefix)
+    for ((index, element) in this.withIndex()) {
+        if (index > 0) result.append(separator)
+        result.append(element)
+    }
+    result.append(postfix)
+    return result.toString()
+}
+
+fun Collection<String>.join(
+    separator: String = ", ",
+    prefix: String = "",
+    postfix: String = ""
+) = joinToString2(separator, prefix, postfix)
 
 fun String.lastChar() : Char = get(length-1)
