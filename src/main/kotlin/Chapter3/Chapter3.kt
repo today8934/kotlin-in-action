@@ -36,6 +36,12 @@ fun main() {
     val sb = StringBuilder("Kotlin?")
     sb.lastChar = '!'
     println(sb)
+
+    val kotlinLogo = """
+                        |  //
+                       .| //
+                       .|/ \"""
+    println(kotlinLogo.trimMargin())
 }
 
 fun <T> joinToString(
@@ -82,3 +88,29 @@ var StringBuilder.lastChar: Char
     set(value: Char) {
         this.setCharAt(length - 1, value)
     }
+
+fun parsePath(path: String) {
+    val regex = """(.+)/(.+)\.(.+)""".toRegex()
+    val matchResult = regex.matchEntire(path)
+    if (matchResult != null) {
+        val (directory, filename, extension) = matchResult.destructured
+        println("Dir: $directory, name: $filename, extension: $extension")
+    }
+}
+
+class User(val id: Int, val name: String, val address: String)
+
+fun User.validateBeforeSave() {
+    fun validate(value: String, fieldName: String) {
+        if (value.isEmpty()) {
+            throw IllegalArgumentException("Can't save user $id: empty $fieldName")
+        }
+    }
+
+    validate(name, "Name")
+    validate(address, "Address")
+}
+
+fun saveUser(user: User) {
+    user.validateBeforeSave()
+}
