@@ -31,7 +31,11 @@ fun main() {
 
     println(listOf("one", "two", "eight").join())
 
-    println("Kotlin".lastChar())
+    println("Kotlin".lastChar)
+
+    val sb = StringBuilder("Kotlin?")
+    sb.lastChar = '!'
+    println(sb)
 }
 
 fun <T> joinToString(
@@ -70,4 +74,11 @@ fun Collection<String>.join(
     postfix: String = ""
 ) = joinToString2(separator, prefix, postfix)
 
-fun String.lastChar() : Char = get(length-1)
+val String.lastChar : Char
+    get() = get(length-1)
+
+var StringBuilder.lastChar: Char
+    get() = get(length - 1)
+    set(value: Char) {
+        this.setCharAt(length - 1, value)
+    }
