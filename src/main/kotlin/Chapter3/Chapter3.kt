@@ -114,3 +114,4 @@ fun User.validateBeforeSave() {
 fun saveUser(user: User) {
     user.validateBeforeSave()
 }
+
